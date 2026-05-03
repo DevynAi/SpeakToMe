@@ -55,7 +55,7 @@ final class SpeechDetectionService: ObservableObject {
             audioEngine.prepare()
             try audioEngine.start()
         } catch {
-            stopListening()
+            _ = stopListening()
         }
     }
 
