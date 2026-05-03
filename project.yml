@@ -1,0 +1,51 @@
+name: SpeakToMe
+options:
+  bundleIdPrefix: com.speaktome
+  deploymentTarget:
+    iOS: "17.0"
+settings:
+  base:
+    PRODUCT_NAME: Speak To Me
+targets:
+  SpeakToMe:
+    type: application
+    platform: iOS
+    sources:
+      - SpeakToMe
+    resources:
+      - SpeakToMe/Resources
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: 2
+        INFOPLIST_FILE: SpeakToMe/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.speaktome.app
+    info:
+      path: SpeakToMe/Info.plist
+      properties:
+        CFBundleDisplayName: Speak To Me
+        UILaunchScreen:
+          UIColorName: ""
+          UIImageName: ""
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSMicrophoneUsageDescription: Speak To Me listens for your child's voice to power rewards.
+        NSSpeechRecognitionUsageDescription: Speak To Me optionally recognizes speech for stronger rewards.
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+  SpeakToMeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - SpeakToMeTests
+    dependencies:
+      - target: SpeakToMe
+  SpeakToMeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - SpeakToMeUITests
+    dependencies:
+      - target: SpeakToMe
