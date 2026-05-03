@@ -15,8 +15,9 @@ struct PromptSelection {
 
 final class PromptEngine {
     func nextPrompt(context: PromptContext, in modelContext: ModelContext) -> PromptSelection? {
+        let childAge = context.child.age
         let descriptor = FetchDescriptor<CurriculumItem>(predicate: #Predicate {
-            $0.isActive && $0.ageMin <= context.child.age && $0.ageMax >= context.child.age
+            $0.isActive && $0.ageMin <= childAge && $0.ageMax >= childAge
         })
 
         guard let items = try? modelContext.fetch(descriptor), !items.isEmpty else { return nil }

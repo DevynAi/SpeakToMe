@@ -3,8 +3,9 @@ import SwiftData
 
 final class CurriculumEngine {
     func items(for child: ChildProfile, category: String?, in context: ModelContext) -> [CurriculumItem] {
+        let childAge = child.age
         let descriptor = FetchDescriptor<CurriculumItem>(predicate: #Predicate {
-            $0.isActive && $0.ageMin <= child.age && $0.ageMax >= child.age
+            $0.isActive && $0.ageMin <= childAge && $0.ageMax >= childAge
         })
 
         guard let all = try? context.fetch(descriptor) else { return [] }
