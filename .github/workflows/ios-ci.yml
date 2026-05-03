@@ -27,10 +27,66 @@ jobs:
 
       - name: Build app for iOS Simulator
         run: |
+          mkdir -p artifacts/build
+          set -o pipefail
           xcodebuild \
             -project SpeakToMe.xcodeproj \
             -scheme SpeakToMe \
             -destination 'generic/platform=iOS Simulator' \
             -configuration Debug \
+            -resultBundlePath artifacts/build/BuildResults.xcresult \
             CODE_SIGNING_ALLOWED=NO \
-            build
+            build | tee artifacts/build/xcodebuild-build.log
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts-${{ github.run_id }}
+          path: artifacts/build
+          retention-days: 14
+
+  unit-tests:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Pick available iPad simulator
+        run: |
+          SIMULATOR_ID=$(xcrun simctl list devices available | grep -E "iPad" | head -n 1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
+          if [ -z "$SIMULATOR_ID" ]; then
+            echo "No available iPad simulator found."
+            exit 1
+          fi
+          echo "SIMULATOR_ID=$SIMULATOR_ID" >> "$GITHUB_ENV"
+
+      - name: Run unit tests
+        run: |
+          mkdir -p artifacts/tests
+          set -o pipefail
+          xcodebuild \
+            -project SpeakToMe.xcodeproj \
+            -scheme SpeakToMe \
+            -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+            -configuration Debug \
+            -resultBundlePath artifacts/tests/TestResults.xcresult \
+            CODE_SIGNING_ALLOWED=NO \
+            test | tee artifacts/tests/xcodebuild-test.log
+
+      - name: Upload test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifacts-${{ github.run_id }}
+          path: artifacts/tests
+          retention-days: 14
