@@ -36,9 +36,10 @@ final class ParentDashboardViewModel: ObservableObject {
     }
 
     func resetProgress(child: ChildProfile, in context: ModelContext) {
-        let attemptDescriptor = FetchDescriptor<AttemptLog>(predicate: #Predicate { $0.childProfileId == child.id })
-        let sessionDescriptor = FetchDescriptor<SessionLog>(predicate: #Predicate { $0.childProfileId == child.id })
-        let rewardDescriptor = FetchDescriptor<UnlockedReward>(predicate: #Predicate { $0.childProfileId == child.id })
+        let childId = child.id
+        let attemptDescriptor = FetchDescriptor<AttemptLog>(predicate: #Predicate { $0.childProfileId == childId })
+        let sessionDescriptor = FetchDescriptor<SessionLog>(predicate: #Predicate { $0.childProfileId == childId })
+        let rewardDescriptor = FetchDescriptor<UnlockedReward>(predicate: #Predicate { $0.childProfileId == childId })
 
         if let attempts = try? context.fetch(attemptDescriptor) {
             attempts.forEach(context.delete)
