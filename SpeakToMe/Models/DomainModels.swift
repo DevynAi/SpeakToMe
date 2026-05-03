@@ -7,10 +7,10 @@ final class ChildProfile {
     var name: String
     var nickname: String?
     var age: Int
-    @Attribute(.transformable) var favoriteAnimals: [String]
-    @Attribute(.transformable) var favoriteColors: [String]
-    @Attribute(.transformable) var favoriteSongs: [String]
-    @Attribute(.transformable) var preferredRewards: [String]
+    var favoriteAnimals: [String]
+    var favoriteColors: [String]
+    var favoriteSongs: [String]
+    var preferredRewards: [String]
     var voiceSensitivity: Double
     var promptDelaySeconds: Double
     var currentDifficultyLevel: Int
@@ -76,11 +76,11 @@ final class CurriculumItem {
     var ageMin: Int
     var ageMax: Int
     var difficultyLevel: Int
-    @Attribute(.transformable) var phonemeBreakdown: [String]
-    @Attribute(.transformable) var syllableBreakdown: [String]
-    @Attribute(.transformable) var visemeSequence: [String]
-    @Attribute(.transformable) var relatedObjects: [String]
-    @Attribute(.transformable) var rewardTags: [String]
+    var phonemeBreakdown: [String]
+    var syllableBreakdown: [String]
+    var visemeSequence: [String]
+    var relatedObjects: [String]
+    var rewardTags: [String]
     var isActive: Bool
 
     init(
@@ -121,8 +121,8 @@ final class PhraseTemplate {
     @Attribute(.unique) var id: UUID
     var templateText: String
     var category: String
-    @Attribute(.transformable) var slots: [String]
-    @Attribute(.transformable) var examples: [String]
+    var slots: [String]
+    var examples: [String]
 
     init(
         id: UUID = UUID(),
@@ -145,7 +145,7 @@ final class GameActivity {
     var name: String
     var worldArea: String
     var activityType: String
-    @Attribute(.transformable) var targetCurriculumIds: [UUID]
+    var targetCurriculumIds: [UUID]
     var rewardProfileId: UUID?
     var minDifficulty: Int
     var maxDifficulty: Int
@@ -188,7 +188,7 @@ final class Reward {
     var intensityLevel: Int
     var assetName: String
     var unlockCondition: String?
-    @Attribute(.transformable) var tags: [String]
+    var tags: [String]
 
     init(
         id: UUID = UUID(),
@@ -263,7 +263,7 @@ final class SessionLog {
     var startTime: Date
     var endTime: Date?
     var durationSeconds: Double
-    @Attribute(.transformable) var activitiesPlayed: [UUID]
+    var activitiesPlayed: [UUID]
     var totalPrompts: Int
     var totalVocalAttempts: Int
     var totalFallbacks: Int
@@ -325,12 +325,12 @@ final class AudioPrompt {
     @Attribute(.unique) var id: UUID
     var curriculumItemId: UUID
     var text: String
-    @Attribute(.transformable) var phonemes: [String]
-    @Attribute(.transformable) var syllables: [String]
-    @Attribute(.transformable) var visemes: [String]
-    @Attribute(.transformable) var speedOptions: [String]
+    var phonemes: [String]
+    var syllables: [String]
+    var visemes: [String]
+    var speedOptions: [String]
     var isSong: Bool
-    @Attribute(.transformable) var melodyPattern: [Double]?
+    var melodyPattern: [Double]?
 
     init(
         id: UUID = UUID(),
