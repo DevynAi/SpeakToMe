@@ -162,4 +162,6 @@ struct ChildProfileSetupView: View {
                 }
             }
         }
+
     }
+}
